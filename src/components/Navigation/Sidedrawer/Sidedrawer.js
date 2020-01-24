@@ -3,7 +3,8 @@ import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import styles from "./Sidedrawer.module.css";
 import Backdrop from "../../UI/Backdrop/Backdrop";
-import Aux from "../../../hoc/Auxiliary";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
+import PropTypes from 'prop-types';
 const sidedrawer = props => {
   let attachedStyles = [styles.Sidedrawer, styles.Close];
   if(props.show){
@@ -23,4 +24,8 @@ const sidedrawer = props => {
     </Aux>
   );
 };
+sidedrawer.propTypes={
+  close:PropTypes.func,
+  show:PropTypes.bool
+}
 export default sidedrawer;

@@ -1,12 +1,18 @@
-import React from "react";
-import Aux from "../../../hoc/Auxiliary";
+import React,{Component} from "react";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
 import Button from "../../UI/Button/Button";
-const orderSummary = props => {
-  const ingredientSummary = Object.keys(props.ingredients).map(key => {
+class OrderSummary extends Component{
+
+  componentDidUpdate(){
+    console.log("[OrderSummary.js] did update");
+    
+  }
+  render(){
+  const ingredientSummary = Object.keys(this.props.ingredients).map(key => {
     return (
       <li key={key}>
         <span style={{ textTransform: "capitilize" }}>{key}</span>:{" "}
-        {props.ingredients[key]}
+        {this.props.ingredients[key]}
       </li>
     );
   });
@@ -16,16 +22,17 @@ const orderSummary = props => {
       <p>A burger containing</p>
       <ul>{ingredientSummary}</ul>
       <p>
-        This comes to $<strong>{props.price.toFixed(2)}</strong>
+        This comes to $<strong>{this.props.price.toFixed(2)}</strong>
       </p>
       <p>All correct?</p>
-      <Button type="Danger" clicked={props.modalClosed}>
+      <Button type="Danger" clicked={this.props.modalClosed}>
         No, cancel
       </Button>
-      <Button type="Success" clicked={props.goToCheckout}>
+      <Button type="Success" clicked={this.props.goToCheckout}>
         Yes, continue
       </Button>
     </Aux>
   );
+  }
 };
-export default orderSummary;
+export default OrderSummary;
