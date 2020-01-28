@@ -1,7 +1,7 @@
 # React Burger Demo
-A demo application built with the React  JS framework to go along with Maximilian Schwarzmüller's React - The Complete Guide
-Live app at: [burgerbuilder-09413.herokuapp.com](https://burgerbuilder-09413.herokuapp.com/)
 
+A demo application built with the React JS framework to go along with Maximilian Schwarzmüller's React - The Complete Guide
+Live app at: [burgerbuilder-09413.herokuapp.com](https://burgerbuilder-09413.herokuapp.com/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
