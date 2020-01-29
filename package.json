@@ -10,17 +10,14 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "^3.3.0",
-    "serve": "^11.3.0"
+    "react-scripts": "3.2.0"
   },
   "scripts": {
     "build:css": "postcss src/styles/index.css -o src/index.css",
     "watch:css": "postcss src/styles/index.css -o src/index.css -w",
     "start": "react-scripts start",
-    "bs": "npm run build:css && npm run start",
-    "bb": "npm run build:css && npm run build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "build": "npm run build:css && react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,6 +37,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.7.4",
+    "postcss-cli": "^7.1.0",
     "tailwindcss": "^1.1.4"
   }
 }
