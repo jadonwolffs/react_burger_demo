@@ -5,6 +5,7 @@
     border-radius: 0 0 30px 30px;
     box-shadow: inset -15px 0 #c15711;
     margin: 2% auto;
+    animation: enable_bread 0.1s linear;
 }
 
 .BreadTop {
@@ -15,6 +16,7 @@
     box-shadow: inset -15px 0 #c15711;
     margin: 2% auto;
     position: relative;
+    animation: enable_bread 0.1s linear;
 }
 
 .Seeds1 {
@@ -87,6 +89,7 @@
     background: linear-gradient(#7f3608, #702e05);
     margin: 2% auto;
     border-radius: 15px;
+    animation: enable_ingredients 0.4s linear;
 }
 
 .Cheese {
@@ -95,6 +98,7 @@
     margin: 2% auto;
     background: linear-gradient(#f4d004, #d6bb22);
     border-radius: 20px;
+    animation: enable_ingredients 0.2s linear;
 }
 
 .Salad {
@@ -103,6 +107,7 @@
     margin: 2% auto;
     background: linear-gradient(#228c1d, #91ce50);
     border-radius: 20px;
+    animation: enable_ingredients 0.1s linear;
 }
 
 .Bacon {
@@ -110,4 +115,29 @@
     height: 3%;
     background: linear-gradient(#bf3813, #c45e38);
     margin: 2% auto;
+    animation: enable_ingredients 0.2s linear;
+}
+
+@keyframes enable_ingredients {
+  0% {
+      transform: scale(1);
+  }
+  60% {
+      transform: scale(1.2);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+
+@keyframes enable_bread {
+  0% {
+      transform: scale(1);
+  }
+  60% {
+      transform: scale(1.05);
+  }
+  100% {
+      transform: scale(1);
+  }
 }

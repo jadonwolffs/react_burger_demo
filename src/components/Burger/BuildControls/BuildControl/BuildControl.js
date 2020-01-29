@@ -4,11 +4,12 @@ const buildControl = props => {
   return (
     <div className={styles.BuildControl}>
       <div className={styles.Label}>{props.label}</div>
-      <button className={styles.More} onClick={props.incrementor}>
+      <button className="text-white rounded bg-greeny hover:green-400 shadow-xl" 
+      onClick={props.incrementor}>
         +
       </button>
       <button
-        className={styles.Less}
+        className="text-white rounded bg-reddy hover:red-400 shadow-xl disabled:shadow-none"
         onClick={props.decrementor}
         disabled={props.disabledInfo}
       >

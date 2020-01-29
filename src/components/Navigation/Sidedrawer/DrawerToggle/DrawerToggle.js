@@ -3,10 +3,10 @@ import styles from "./DrawerToggle.module.css";
 import PropTypes from "prop-types";
 const drawerToggle = props => {
   return (
-    <div className={styles.DrawerToggle} onClick={props.clicked}>
-      <div />
-      <div />
-      <div />
+    <div className={styles.DrawerToggle+" rounded bg-blue"} onClick={props.clicked}>
+      <div className="rounded"/>
+      <div className="rounded"/>
+      <div className="rounded"/>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const toolbar = props => {
   return (
-    <header className={styles.Toolbar}>
+    <header className={[styles.Toolbar, 'bg-darker'].join(" ")}>
       <DrawerToggle clicked={props.toggle} />
       <div className={styles.Logo}>
         <Logo />

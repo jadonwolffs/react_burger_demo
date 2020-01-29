@@ -13,3 +13,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html{
+  background-color: #faf8ed;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.bg-greeny {
+  background-color: #a7bf2e;
+}
+
+.bg-reddy {
+  background-color: #f95a37;
+}
+
+.bg-darker {
+  background-color: #2f2b32;
+}

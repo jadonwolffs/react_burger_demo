@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const sidedrawer = props => {
   let attachedStyles = [styles.Sidedrawer, styles.Close];
   if(props.show){
-      attachedStyles = [styles.Sidedrawer, styles.Open]
+      attachedStyles = [styles.Sidedrawer, styles.Open, "bg-darker"]
   }
   return (
     <Aux>
