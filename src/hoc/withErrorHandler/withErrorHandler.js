@@ -9,6 +9,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       error: null
     };
     constructor() {
+      console.log("[withErrorHandler.js] constructor");
       // componentWillMount() {
       super();
       this.requ = axios.interceptors.request.use(req => {
@@ -23,8 +24,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
       );
     }
     componentWillUnmount() {
-        axios.interceptors.request.eject(this.requ);
-        axios.interceptors.response.eject(this.resp);
+      console.log("[withErrorHandler.js] will unmount", this.requ,this.resp );
+      axios.interceptors.request.eject(this.requ);
+      axios.interceptors.response.eject(this.resp);
     }
     clearErrorHandler = () => {
       this.setState({ error: null });

@@ -1,17 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 
-function App() {
-  return (
-    <div>
-      <Layout>
-      {/* <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-    <div className="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="dark" data-vanity="jadon-wolffs"><a className="LI-simple-link" href='https://za.linkedin.com/in/jadon-wolffs?trk=profile-badge'>Jadon Wolffs</a></div> */}
-        <BurgerBuilder/>
-      </Layout>
-    </div>
-  );
+class App extends Component {
+  state = {
+    show: true
+  };
+  componentDidMount() {
+    // setTimeout(() => {
+    //   this.setState({ show: false });
+    // }, 5000);
+  }
+  render() {
+    return (
+      <div>
+        <Layout>
+          {this.state.show ? <BurgerBuilder /> : null}
+        </Layout>
+      </div>
+    );
+  }
 }
 
 export default App;
