@@ -7,7 +7,6 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import { Redirect } from "react-router-dom";
 
 const PRICES = {
   salad: 0.2,
@@ -115,8 +114,6 @@ class BurgerBuilder extends Component {
     //     this.setState({ loading: false, checkout: false });
     //   });
     this.props.history.push("/checkout");
-    
-    // return <Redirect to="/checkout"/>
   };
 
   render() {

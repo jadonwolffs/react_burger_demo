@@ -9,10 +9,10 @@ const comp = props => {
       <div style={{width: "100%", margin: "auto" }}>
         <Burger ingredients={props.ingredients} />
       </div>
-      <Button type="Danger" clicked="">
+      <Button type="Danger" clicked={props.cancel}>
         Cancel
       </Button>
-      <Button type="Success" clicked="">
+      <Button type="Success" clicked={props.proceed}>
         Proceed
       </Button>
     </div>
