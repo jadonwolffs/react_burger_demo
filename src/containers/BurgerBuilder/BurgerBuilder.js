@@ -7,6 +7,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import { Redirect } from "react-router-dom";
 
 const PRICES = {
   salad: 0.2,
@@ -88,31 +89,34 @@ class BurgerBuilder extends Component {
   };
 
   goToCheckout = () => {
-    this.setState({ loading: true });
-    console.log("[BurgerBuilder.js] checking out horse");
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.price, //price should be recalculated on the server
-      customer: {
-        name: "Jadon",
-        address: {
-          street: "Test",
-          country: "Germany"
-        },
-        email: "example@example.com"
-      },
-      method: "toDoor"
-    };
-    axios
-      .post("/orders.json", order)
-      .then(response => {
-        console.log(response);
-        this.setState({ loading: false, checkout: false });
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ loading: false, checkout: false });
-      });
+    // this.setState({ loading: true });
+    // console.log("[BurgerBuilder.js] checking out horse");
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.price, //price should be recalculated on the server
+    //   customer: {
+    //     name: "Jadon",
+    //     address: {
+    //       street: "Test",
+    //       country: "Germany"
+    //     },
+    //     email: "example@example.com"
+    //   },
+    //   method: "toDoor"
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then(response => {
+    //     console.log(response);
+    //     this.setState({ loading: false, checkout: false });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     this.setState({ loading: false, checkout: false });
+    //   });
+    this.props.history.push("/checkout");
+    
+    // return <Redirect to="/checkout"/>
   };
 
   render() {
