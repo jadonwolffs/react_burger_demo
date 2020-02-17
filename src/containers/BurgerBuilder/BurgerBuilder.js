@@ -22,12 +22,17 @@ class BurgerBuilder extends Component {
     enabledPurchase: false,
     checkout: false,
     loading: false,
-    error:false
+    error: false
   };
   componentDidMount() {
-    axios.get("/ingredients.json").then(response => {
-      this.setState({ ingredients: response.data });
-    }).catch(error=>{this.setState({error:true})});
+    axios
+      .get("/ingredients.json")
+      .then(response => {
+        this.setState({ ingredients: response.data });
+      })
+      .catch(error => {
+        this.setState({ error: true });
+      });
   }
   checkPurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
@@ -88,39 +93,19 @@ class BurgerBuilder extends Component {
   };
 
   goToCheckout = () => {
-    // this.setState({ loading: true });
-    // console.log("[BurgerBuilder.js] checking out horse");
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.price, //price should be recalculated on the server
-    //   customer: {
-    //     name: "Jadon",
-    //     address: {
-    //       street: "Test",
-    //       country: "Germany"
-    //     },
-    //     email: "example@example.com"
-    //   },
-    //   method: "toDoor"
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then(response => {
-    //     console.log(response);
-    //     this.setState({ loading: false, checkout: false });
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     this.setState({ loading: false, checkout: false });
-    //   });
-    const query=[];
-    for(let i in this.state.ingredients){
-      query.push(encodeURIComponent(i)+'=' +encodeURIComponent(this.state.ingredients[i]))
+    const query = [];
+    for (let i in this.state.ingredients) {
+      query.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
     }
-    const string = query.join("&")
+    query.push("price=" + this.state.price);
+    const string = query.join("&");
     this.props.history.push({
-      pathname:"/checkout",
-      search:"?"+string
+      pathname: "/checkout",
+      search: "?" + string
     });
   };
 
@@ -132,7 +117,11 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let summary = null;
-    let burger = this.state.error ? <p>Ingredients could't be loaded!</p>: <Spinner />;
+    let burger = this.state.error ? (
+      <p>Ingredients could't be loaded!</p>
+    ) : (
+      <Spinner />
+    );
     if (this.state.ingredients) {
       burger = (
         <Aux>
