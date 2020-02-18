@@ -13,7 +13,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "your name"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       street: {
         elementType: "input",
@@ -21,7 +25,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "your street address"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       country: {
         elementType: "input",
@@ -29,7 +37,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "your country"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: "input",
@@ -37,7 +49,12 @@ class ContactData extends Component {
           type: "email",
           placeholder: "your email"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLength: 5
+        },
+        valid: false
       },
       method: {
         elementType: "select",
@@ -59,15 +76,30 @@ class ContactData extends Component {
     };
     const newElement = { ...newForm[inputIdentifier] };
     newElement.value = event.target.value;
+    newElement.valid = this.checkValidity(
+      event.target.value,
+      newForm[inputIdentifier].validation
+    );
+    console.log(newElement);
     newForm[inputIdentifier] = newElement;
-    this.setState({orderForm:newForm});
+    this.setState({ orderForm: newForm });
+  };
+  checkValidity = (value, validation) => {
+    let isValid = true;
+    if (validation.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+    if (validation.minLength) {
+      isValid = value.length >= validation.minLength && isValid;
+    }
+    return isValid;
   };
   orderHandler = event => {
     event.preventDefault();
     this.setState({ loading: true });
-    const formData = { };
+    const formData = {};
     for (const identifier in this.state.orderForm) {
-        formData[identifier]=this.state.orderForm[identifier].value;
+      formData[identifier] = this.state.orderForm[identifier].value;
     }
     console.log("[BurgerBuilder.js] checking out horse");
     console.log("[ContactData.js] price: " + this.props.price);
@@ -75,7 +107,7 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price, //price should be recalculated on the server
-      orderData:formData
+      orderData: formData
     };
     axios
       .post("/orders.json", order)
@@ -108,9 +140,7 @@ class ContactData extends Component {
             changed={event => this.inputChangedHandler(event, el.key)}
           />
         ))}
-        <Button type="Success" >
-          Place Order
-        </Button>
+        <Button type="Success">Place Order</Button>
       </form>
     );
     if (this.state.loading) {
