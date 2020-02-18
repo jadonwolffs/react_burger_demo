@@ -14,12 +14,14 @@ class ContactData extends Component {
     loading: false
   };
   orderHandler = event => {
-    // event.preventDefault();
+    event.preventDefault();
     this.setState({ loading: true });
     console.log("[BurgerBuilder.js] checking out horse");
+    console.log("[ContactData.js] price: "+this.props.price);
+    
     const order = {
       ingredients: this.props.ingredients,
-      price: this.state.price, //price should be recalculated on the server
+      price: this.props.price, //price should be recalculated on the server
       customer: {
         name: "Jadon",
         address: {

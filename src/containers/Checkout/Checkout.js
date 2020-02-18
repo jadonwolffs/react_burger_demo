@@ -19,6 +19,8 @@ class Checkout extends Component {
       }
     }
     this.setState({ price: +price });
+    console.log("[Checkout.js] price: "+this.state.price);
+    
     this.setState({ ingredients: ingredients });
   }
   proceedHandler = () => {
@@ -34,6 +36,7 @@ class Checkout extends Component {
           ingredients={this.state.ingredients}
           proceed={this.proceedHandler}
           cancel={this.cancelHandler}
+          price={this.state.price}
         />
         <Route
           path={this.props.match.url + "/user"}
