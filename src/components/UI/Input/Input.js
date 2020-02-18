@@ -3,11 +3,15 @@ import styles from "./Input.module.css";
 
 const input = props => {
   let element = null;
+  const classes = [styles.InputElement];
+  if(props.invalid && props.validate && props.touched){
+      classes.push(styles.Invalid)
+  }
   switch (props.elementType) {
     case "input":
       element = (
         <input
-          className={styles.InputElement}
+          className={classes.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -17,7 +21,7 @@ const input = props => {
     case "select":
       element = (
         <select
-          className={styles.InputElement}
+          className={classes.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -33,7 +37,7 @@ const input = props => {
     default:
       element = (
         <input
-          className={styles.InputElement}
+          className={classes.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
