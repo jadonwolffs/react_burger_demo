@@ -65,12 +65,17 @@ class ContactData extends Component {
   orderHandler = event => {
     event.preventDefault();
     this.setState({ loading: true });
+    const formData = { };
+    for (const identifier in this.state.orderForm) {
+        formData[identifier]=this.state.orderForm[identifier].value;
+    }
     console.log("[BurgerBuilder.js] checking out horse");
     console.log("[ContactData.js] price: " + this.props.price);
 
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price //price should be recalculated on the server
+      price: this.props.price, //price should be recalculated on the server
+      orderData:formData
     };
     axios
       .post("/orders.json", order)
@@ -93,7 +98,7 @@ class ContactData extends Component {
       });
     }
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {elements.map(el => (
           <Input
             key={el.key}
@@ -103,7 +108,7 @@ class ContactData extends Component {
             changed={event => this.inputChangedHandler(event, el.key)}
           />
         ))}
-        <Button type="Success" clicked={this.orderHandler}>
+        <Button type="Success" >
           Place Order
         </Button>
       </form>
