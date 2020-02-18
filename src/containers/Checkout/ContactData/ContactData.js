@@ -3,34 +3,74 @@ import Button from "../../../components/UI/Button/Button";
 import styles from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: ""
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "your name"
+        },
+        value: ""
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "your street address"
+        },
+        value: ""
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "your country"
+        },
+        value: ""
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "your email"
+        },
+        value: ""
+      },
+      method: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "Fastest" },
+            { value: "cheapest", displayValue: "Cheapest" }
+          ]
+        },
+        value: ""
+      }
     },
     loading: false
+  };
+  inputChangedHandler = (event, inputIdentifier) => {
+    console.log(event.target.value);
+    const newForm = {
+      ...this.state.orderForm
+    };
+    const newElement = { ...newForm[inputIdentifier] };
+    newElement.value = event.target.value;
+    newForm[inputIdentifier] = newElement;
+    this.setState({orderForm:newForm});
   };
   orderHandler = event => {
     event.preventDefault();
     this.setState({ loading: true });
     console.log("[BurgerBuilder.js] checking out horse");
-    console.log("[ContactData.js] price: "+this.props.price);
-    
+    console.log("[ContactData.js] price: " + this.props.price);
+
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price, //price should be recalculated on the server
-      customer: {
-        name: "Jadon",
-        address: {
-          street: "Test",
-          country: "Germany"
-        },
-        email: "example@example.com"
-      },
-      method: "toDoor"
+      price: this.props.price //price should be recalculated on the server
     };
     axios
       .post("/orders.json", order)
@@ -45,32 +85,24 @@ class ContactData extends Component {
     this.props.history.push("/");
   };
   render() {
+    const elements = [];
+    for (let key in this.state.orderForm) {
+      elements.push({
+        key: key,
+        config: this.state.orderForm[key]
+      });
+    }
     let form = (
       <form>
-        <input
-          className={styles.Input}
-          type="text"
-          name="name"
-          placeholder="your name"
-        />
-        <input
-          className={styles.Input}
-          type="email"
-          name="email"
-          placeholder="your email"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="street"
-          placeholder="your street address"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="postal"
-          placeholder="your postal code"
-        />
+        {elements.map(el => (
+          <Input
+            key={el.key}
+            elementType={el.config.elementType}
+            elementConfig={el.config.elementConfig}
+            value={el.config.value}
+            changed={event => this.inputChangedHandler(event, el.key)}
+          />
+        ))}
         <Button type="Success" clicked={this.orderHandler}>
           Place Order
         </Button>
