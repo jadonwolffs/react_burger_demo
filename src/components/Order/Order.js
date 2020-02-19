@@ -8,10 +8,7 @@ const order = props => {
 
   const ingredientOutput = ingredients.map(ig => {
     return (
-      <span key={ig.name} style={
-          {margin:'2px'}
-      }>
-          
+      <span key={ig.name} style={{ margin: "2px" }}>
         {ig.name[0].toUpperCase() + ig.name.substring(1, ig.name.length)}:{" "}
         {ig.amount}
         <br />
@@ -19,7 +16,7 @@ const order = props => {
     );
   });
   return (
-    <div className={styles.Order}>
+    <div className={styles.Order+" rounded-lg shadow-lg"}>
       <p>
         Ingredients:
         <br />
