@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Button from "../../../components/UI/Button/Button";
 import styles from "./ContactData.module.css";
 import axios from "../../../axios-orders";
@@ -18,7 +19,7 @@ class ContactData extends Component {
           required: true
         },
         valid: false,
-        touched:false
+        touched: false
       },
       street: {
         elementType: "input",
@@ -31,7 +32,7 @@ class ContactData extends Component {
           required: true
         },
         valid: false,
-        touched:false
+        touched: false
       },
       country: {
         elementType: "input",
@@ -44,7 +45,7 @@ class ContactData extends Component {
           required: true
         },
         valid: false,
-        touched:false
+        touched: false
       },
       email: {
         elementType: "input",
@@ -58,7 +59,7 @@ class ContactData extends Component {
           minLength: 5
         },
         valid: false,
-        touched:false
+        touched: false
       },
       method: {
         elementType: "select",
@@ -69,12 +70,12 @@ class ContactData extends Component {
           ]
         },
         value: "fastest",
-        valid:true,
-        touched:false
+        valid: true,
+        touched: false
       }
     },
     loading: false,
-    submittable:false
+    submittable: false
   };
   inputChangedHandler = (event, inputIdentifier) => {
     // console.log(event.target.value);
@@ -88,13 +89,13 @@ class ContactData extends Component {
       newForm[inputIdentifier].validation
     );
     // console.log(newElement);
-    newElement.touched= true;
+    newElement.touched = true;
     newForm[inputIdentifier] = newElement;
     let validForm = true;
-    for(let inputIdentifier in newForm){
-      validForm =  newForm[inputIdentifier].valid && validForm
+    for (let inputIdentifier in newForm) {
+      validForm = newForm[inputIdentifier].valid && validForm;
     }
-    this.setState({ orderForm: newForm ,submittable:validForm });
+    this.setState({ orderForm: newForm, submittable: validForm });
   };
   checkValidity = (value, validation) => {
     let isValid = true;
@@ -157,7 +158,9 @@ class ContactData extends Component {
             touched={el.config.touched}
           />
         ))}
-        <Button type="Success" disabled={!this.state.submittable}>Place Order</Button>
+        <Button type="Success" disabled={!this.state.submittable}>
+          Place Order
+        </Button>
       </form>
     );
     if (this.state.loading) {
@@ -171,4 +174,12 @@ class ContactData extends Component {
     );
   }
 }
-export default ContactData;
+
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    price: state.price
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);

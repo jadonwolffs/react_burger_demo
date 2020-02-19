@@ -37,7 +37,6 @@ class BurgerBuilder extends Component {
         return sum + el;
       }, 0);
     console.log("[BurgerBuilder.js] " + sum + " ingredients");
-    // this.setState({ enabledPurchase: sum > 0 });
     return sum > 0;
   }
 
@@ -51,57 +50,8 @@ class BurgerBuilder extends Component {
     console.log("[BurgerBuilder.js] cancelling checkout");
   };
 
-  // addIngredientHandler = type => {
-  //   const oldCount = this.props.ingredients[type];
-  //   const updatedValue = oldCount + 1;
-  //   const newIngredients = {
-  //     ...this.props.ingredients
-  //   };
-  //   newIngredients[type] = updatedValue;
-  //   const priceIncrement = PRICES[type];
-  //   const oldPrice = this.state.price;
-  //   const newPrice = oldPrice + priceIncrement;
-  //   this.setState({ price: newPrice, ingredients: newIngredients });
-  //   console.log(
-  //     "[BurgerBuilder.js] increased price from " + oldPrice + " to " + newPrice
-  //   );
-  //   this.checkPurchaseState(newIngredients);
-  // };
-
-  // removeIngredientHandler = type => {
-  //   const oldCount = this.props.ingredients[type];
-  //   const newIngredients = {
-  //     ...this.props.ingredients
-  //   };
-  //   if (oldCount > 0) {
-  //     const updatedValue = oldCount - 1;
-  //     newIngredients[type] = updatedValue;
-  //     const priceIncrement = PRICES[type];
-  //     const oldPrice = this.state.price;
-  //     const newPrice = oldPrice - priceIncrement;
-  //     this.setState({ price: newPrice, ingredients: newIngredients });
-  //     console.log(
-  //       "[BurgerBuilder.js] reduced price from " + oldPrice + " to " + newPrice
-  //     );
-  //   }
-  //   this.checkPurchaseState(newIngredients);
-  // };
-
   goToCheckout = () => {
-    const query = [];
-    for (let i in this.props.ingredients) {
-      query.push(
-        encodeURIComponent(i) +
-          "=" +
-          encodeURIComponent(this.props.ingredients[i])
-      );
-    }
-    query.push("price=" + this.props.price);
-    const string = query.join("&");
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + string
-    });
+    this.props.history.push("/checkout");
   };
 
   render() {
