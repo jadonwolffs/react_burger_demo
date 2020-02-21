@@ -1,9 +1,10 @@
 import * as actions from "../actions/actions";
+import { updateObject } from "../utility";
 
 const initialState = {
   ingredients: null,
   price: 3,
-  error:false
+  error: false
 };
 
 const PRICES = {
@@ -16,35 +17,19 @@ const PRICES = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredient]: state.ingredients[action.ingredient] + 1
-        },
-        price: state.price + PRICES[action.ingredient]
-      };
+      const updatedIngredientA = {[action.ingredient]: state.ingredients[action.ingredient] + 1};
+      const updatedIngredientsA = updateObject(state.ingredients,updatedIngredientA);
+      const updatedStateA = {ingredients:updatedIngredientsA,price: state.price + PRICES[action.ingredient] };
+      return updateObject(state,updatedStateA);
     case actions.REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredient]: state.ingredients[action.ingredient] - 1
-        },
-        price: state.price - PRICES[action.ingredient]
-      };
-      case actions.SET_INGREDIENTS:
-      return{
-        ...state,
-        ingredients:action.ingredients,
-        error:false,
-        price:initialState.price
-      }
-      case actions.FAIL_INGREDIENTS:
-        return{
-          ...state,
-          error:true
-        }
+      const updatedIngredientD = {[action.ingredient]: state.ingredients[action.ingredient] - 1};
+      const updatedIngredientsD = updateObject(state.ingredients,updatedIngredientD);
+      const updatedStateD = {ingredients:updatedIngredientsD,price: state.price - PRICES[action.ingredient] };
+      return updateObject(state,updatedStateD);
+    case actions.SET_INGREDIENTS:
+      return updateObject(state,{ingredients: action.ingredients,error: false,price: initialState.price})
+    case actions.FAIL_INGREDIENTS:
+      return updateObject(state,{error: true})
     default:
       return state;
   }
