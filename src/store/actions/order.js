@@ -62,7 +62,7 @@ export const ordersStart = () =>{
 
 export const initFetch = orderData => {
   return dispatch => {
-    dispatch(purchaseStart());
+    dispatch(ordersStart());
     axios
       .get("/orders.json")
       .then(res => {
@@ -72,11 +72,9 @@ export const initFetch = orderData => {
           fetchedOrders.push({ ...res.data[key], key: key });
         }
         dispatch(ordersSuccess(fetchedOrders));
-        // this.setState({ loading: false, orders: fetchedOrders });
       })
       .catch(err => {
         dispatch(ordersFail(err));
-        // this.setState({ loading: false, orders: fetchedOrders });
       });
   };
 };
