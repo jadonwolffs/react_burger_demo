@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions";
+import * as actions from "../../store/actions/index";
 
 import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
@@ -14,19 +14,10 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 
 class BurgerBuilder extends Component {
   state = {
-    checkout: false,
-    loading: false,
-    error: false
+    checkout: false
   };
   componentDidMount() {
-    // axios
-    //   .get("/ingredients.json")
-    //   .then(response => {
-    //     this.setState({ ingredients: response.data });
-    //   })
-    //   .catch(error => {
-    //     this.setState({ error: true });
-    //   });
+    this.props.onInit();
   }
   checkPurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
@@ -62,7 +53,7 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let summary = null;
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p>Ingredients could't be loaded!</p>
     ) : (
       <Spinner />
@@ -89,9 +80,6 @@ class BurgerBuilder extends Component {
           price={this.props.price}
         />
       );
-      if (this.state.loading) {
-        summary = <Spinner></Spinner>;
-      }
     }
     return (
       <Aux>
@@ -107,17 +95,21 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.ingredients,
-    price: state.price
+    price: state.price,
+    error: state.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: ing => {
-      dispatch({ type: actions.ADD_INGREDIENT, ingredient: ing });
+      dispatch(actions.addIngredient(ing));
     },
     onRemoveIngredient: ing => {
-      dispatch({ type: actions.REMOVE_INGREDIENT, ingredient: ing });
+      dispatch(actions.removeIngredient(ing));
+    }, 
+    onInit: () => {
+      dispatch(actions.initializeBuilder());
     }
   };
 };
@@ -125,4 +117,8 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withErrorHandler(BurgerBuilder, axios));
+)(
+  withErrorHandler(
+    BurgerBuilder
+    , axios)
+    );

@@ -8390,6 +8390,10 @@ html{
   background-color: #2f2b32;
 }
 
+div{
+  transition: all ease 1s
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;
