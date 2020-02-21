@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
+import * as actions from '../../../store/actions/order'
 import Button from "../../../components/UI/Button/Button";
-import styles from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
+
+import styles from "./ContactData.module.css";
 class ContactData extends Component {
   state = {
     orderForm: {
@@ -111,7 +115,7 @@ class ContactData extends Component {
   };
   orderHandler = event => {
     event.preventDefault();
-    this.setState({ loading: true });
+    // this.setState({ loading: true });
     const formData = {};
     for (const identifier in this.state.orderForm) {
       formData[identifier] = this.state.orderForm[identifier].value;
@@ -124,16 +128,7 @@ class ContactData extends Component {
       price: this.props.price, //price should be recalculated on the server
       orderData: formData
     };
-    axios
-      .post("/orders.json", order)
-      .then(response => {
-        console.log(response);
-        this.setState({ loading: false });
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ loading: false });
-      });
+    this.props.onPurchase(order);
     this.props.history.push("/");
   };
   render() {
@@ -182,4 +177,12 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+  return {
+    onPurchase: orderData => {
+      dispatch(actions.initPurchase(orderData));
+    }
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(ContactData,axios));
