@@ -158,7 +158,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return (
@@ -172,8 +172,9 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.price
+    ingredients: state.builder.ingredients,
+    price: state.builder.price,
+    loading:state.order.loading
   };
 };
 

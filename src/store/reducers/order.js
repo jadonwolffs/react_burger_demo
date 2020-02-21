@@ -17,6 +17,8 @@ const reducer = (state = initialState, action) => {
       };
     case actions.PURCHASE_FAIL:
       return { ...state, loading: false };
+    case actions.PURCHASE_START:
+      return { ...state, loading: true };
     default:
       return state;
   }
