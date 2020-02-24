@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
@@ -31,19 +31,27 @@ class App extends Component {
           {this.state.show ? (
             <Route path="/" exact component={BurgerBuilder} />
           ) : null}
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/orders" component={Orders} />
-          <Route path="/auth" component={Auth} />
-          <Route path="/logout" component={Logout} />
+          {this.props.auth ? (
+            <Route path="/checkout" component={Checkout} />
+          ) : null}
+          {this.props.auth ? <Route path="/orders" component={Orders} /> : null}
+          {!this.props.auth ? <Route path="/auth" component={Auth} /> : null}
+          {this.props.auth ? <Route path="/logout" component={Logout} /> : null}
+          <Redirect to="/"/>
         </Switch>
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    auth: state.auth.token !== null
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     onAuthCheck: () => dispatch(authCheck())
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
