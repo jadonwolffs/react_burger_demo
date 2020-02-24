@@ -3,12 +3,22 @@ import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
-import Checkout from "./containers/Checkout/Checkout";
-import Orders from "./containers/Orders/Orders";
-import Auth from "./containers/Auth/Auth";
-import Logout from "./containers/Auth/Logout/Logout";
 import { connect } from "react-redux";
 import { authCheck } from "./store/actions/index";
+import asyncComponent from "./hoc/asyncComponent/asyncComponent";
+
+const asyncCheckout = asyncComponent(()=>{
+  return import('./containers/Checkout/Checkout')
+});
+const asyncOrders = asyncComponent(()=>{
+  return import('./containers/Orders/Orders')
+});
+const asyncAuth = asyncComponent(()=>{
+  return import('./containers/Auth/Auth')
+});
+const asyncLogout = asyncComponent(()=>{
+  return import('./containers/Auth/Logout/Logout')
+});
 
 class App extends Component {
   state = {
@@ -28,16 +38,12 @@ class App extends Component {
           {/* <Checkout/> */}
         </Layout>
         <Switch>
-          {this.state.show ? (
-            <Route path="/" exact component={BurgerBuilder} />
-          ) : null}
-          {this.props.auth ? (
-            <Route path="/checkout" component={Checkout} />
-          ) : null}
-          {this.props.auth ? <Route path="/orders" component={Orders} /> : null}
-          {!this.props.auth ? <Route path="/auth" component={Auth} /> : null}
-          {this.props.auth ? <Route path="/logout" component={Logout} /> : null}
-          <Redirect to="/"/>
+          {this.state.show ? <Route path="/" exact component={BurgerBuilder} />: null}
+          {this.props.auth ? <Route path="/checkout" component={asyncCheckout} />: null}
+          {this.props.auth ? <Route path="/orders" component={asyncOrders} /> : null}
+          {!this.props.auth ? <Route path="/auth" component={asyncAuth} /> : null}
+          {this.props.auth ? <Route path="/logout" component={asyncLogout} /> : null}
+          <Redirect to="/" />
         </Switch>
       </div>
     );
