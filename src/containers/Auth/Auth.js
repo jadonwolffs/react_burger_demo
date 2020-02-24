@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
-import { auth } from "../../store/actions/index";
+import { auth, setAuthPath} from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
 import styles from "./Auth.module.css";
@@ -43,6 +43,13 @@ class Auth extends Component {
     },
     signUp: true
   };
+  componentDidMount(){
+    if(this.props.built){
+      this.props.onAuthPath("/checkout")
+    }else{
+      this.props.onAuthPath("/")
+    }
+  }
   checkValidity = (value, validation) => {
     let isValid = true;
     if (validation) {
@@ -76,6 +83,8 @@ class Auth extends Component {
   };
   submitHandler = event => {
     event.preventDefault();
+    console.log("PATH: "+this.props.authRedirect);
+    
     this.props.onAuth(
       this.state.controls.email.value,
       this.state.controls.password.value,
@@ -117,9 +126,12 @@ class Auth extends Component {
         <p>Error: {this.props.error.message}</p>
       )
     }
+    
+    
+    const redirect = <Redirect to={this.props.authRedirect}/>
     return (
       <div className={styles.Auth}>
-        {this.props.token?<Redirect to="/"/>:null}
+        {this.props.token?redirect:null}
         {error}
         <form >
           <h1>Sign up</h1>
@@ -135,14 +147,17 @@ class Auth extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, signUp) => dispatch(auth(email, password, signUp))
+    onAuth: (email, password, signUp) => dispatch(auth(email, password, signUp)),
+    onAuthPath: (path)=>dispatch(setAuthPath(path))
   };
 };
 const mapStateToProps = state => {
   return {
     loading:state.auth.loading,
     error:state.auth.error,
-    token:state.auth.token
+    token:state.auth.token,
+    built:state.builder.built,
+    authRedirect: state.auth.authRedirect
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

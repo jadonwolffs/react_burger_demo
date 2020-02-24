@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
@@ -7,6 +7,8 @@ import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
 import Auth from "./containers/Auth/Auth";
 import Logout from "./containers/Auth/Logout/Logout";
+import { connect } from "react-redux";
+import { authCheck } from "./store/actions/index";
 
 class App extends Component {
   state = {
@@ -16,6 +18,7 @@ class App extends Component {
     // setTimeout(() => {
     //   this.setState({ show: false });
     // }, 5000);
+    this.props.onAuthCheck();
   }
   render() {
     return (
@@ -37,5 +40,10 @@ class App extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuthCheck: () => dispatch(authCheck())
+  };
+};
 
-export default App;
+export default withRouter(connect(null, mapDispatchToProps)(App));

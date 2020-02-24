@@ -32,8 +32,12 @@ class BurgerBuilder extends Component {
   }
 
   puchaseHandler = () => {
-    this.setState({ checkout: true });
-    console.log("[BurgerBuilder.js] proceeding to checkout");
+    if (this.props.auth) {
+      this.setState({ checkout: true });
+    } else {
+      this.props.onAuthPath("/checkout");
+      this.props.history.push("/auth");
+    }
   };
 
   closeModalHandler = () => {
@@ -69,6 +73,7 @@ class BurgerBuilder extends Component {
             price={this.props.price}
             enabledPurchase={this.checkPurchaseState(this.props.ingredients)}
             checkout={this.puchaseHandler}
+            auth={this.props.auth}
           />
         </Aux>
       );
@@ -96,7 +101,8 @@ const mapStateToProps = state => {
   return {
     ingredients: state.builder.ingredients,
     price: state.builder.price,
-    error: state.builder.error
+    error: state.builder.error,
+    auth: state.auth.token !== null
   };
 };
 
@@ -107,9 +113,12 @@ const mapDispatchToProps = dispatch => {
     },
     onRemoveIngredient: ing => {
       dispatch(actions.removeIngredient(ing));
-    }, 
+    },
     onInit: () => {
       dispatch(actions.initializeBuilder());
+    },
+    onAuthPath: path => {
+      dispatch(actions.setAuthPath(path));
     }
   };
 };
@@ -117,8 +126,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withErrorHandler(
-    BurgerBuilder
-    , axios)
-    );
+)(withErrorHandler(BurgerBuilder, axios));

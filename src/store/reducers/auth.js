@@ -1,10 +1,13 @@
-import * as actions from "../actions/actions";
 import { updateObject } from "../utility";
+
+import * as actions from "../actions/actions";
+
 const initialState = {
   token: null,
   userId: null,
   error: null,
-  loading: null
+  loading: null,
+  authRedirect: "/"
 };
 const authStart = (state, action) => {
   return updateObject(state, { error: null, loading: true });
@@ -23,6 +26,9 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
   return updateObject(state, { token: null, userId: null });
 };
+const authPath = (state, action) => {
+  return updateObject(state, { authRedirect: action.path });
+};
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.AUTH_START:
@@ -33,6 +39,8 @@ const reducer = (state = initialState, action) => {
       return authFail(state, action);
     case actions.AUTH_LOGOUT:
       return authLogout(state, action);
+    case actions.AUTH_PATH:
+      return authPath(state, action);
     default:
       return state;
   }

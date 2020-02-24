@@ -30,9 +30,10 @@ const buildControls = props => {
         className=
         //"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
          {[styles.OrderButton,"rounded px-4"].join(" ")}
-        disabled={!props.enabledPurchase}
+        disabled={!(props.enabledPurchase)}
+        
       >
-        Place Order
+        {props.auth ? "Place Order":"Signup to order"}
       </button>
     </div>
   );

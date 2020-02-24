@@ -4,5 +4,5 @@ export {
   initializeBuilder,
   failIngredients
 } from "./burgerBuilder";
-export { purchaseStart, purchaseInit, initFetch} from "./order";
-export {auth,logout} from './auth'
+export { purchaseStart, purchaseInit, initFetch } from "./order";
+export { auth, logout, setAuthPath, authCheck } from "./auth";
