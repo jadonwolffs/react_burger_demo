@@ -19,11 +19,11 @@ export const purchaseStart = () => {
     type: actions.PURCHASE_START
   };
 };
-export const initPurchase = orderData => {
+export const initPurchase = (orderData,token) => {
   return dispatch => {
     dispatch(purchaseStart());
     axios
-      .post("/orders.json", orderData)
+      .post("/orders.json?auth="+token, orderData)
       .then(response => {
         console.log(response);
         dispatch(purchaseSuccess(response.data.name, orderData));
@@ -60,11 +60,11 @@ export const ordersStart = () =>{
   }
 }
 
-export const initFetch = orderData => {
+export const initFetch = token => {
   return dispatch => {
     dispatch(ordersStart());
     axios
-      .get("/orders.json")
+      .get("/orders.json?auth="+token)
       .then(res => {
         console.log(res.data);
         const fetchedOrders = [];

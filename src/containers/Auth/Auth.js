@@ -7,6 +7,7 @@ import { auth } from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
 import styles from "./Auth.module.css";
+import { Redirect } from "react-router";
 
 class Auth extends Component {
   state = {
@@ -112,17 +113,15 @@ class Auth extends Component {
     }
     let error = null;
     if(this.props.error){
-      // console.log("error: ",this.props.error);
       error = (
         <p>Error: {this.props.error.message}</p>
       )
     }
     return (
       <div className={styles.Auth}>
+        {this.props.token?<Redirect to="/"/>:null}
         {error}
-        <form 
-        // onSubmit={this.submitHandler}
-        >
+        <form >
           <h1>Sign up</h1>
           {form}
           <Button type="Success" clicked={this.submitHandler}>SUBMIT</Button>
@@ -142,7 +141,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     loading:state.auth.loading,
-    error:state.auth.error
+    error:state.auth.error,
+    token:state.auth.token
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

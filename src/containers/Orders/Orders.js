@@ -7,7 +7,7 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Spinner from "../../components/UI/Spinner/Spinner";
 class Orders extends Component {
   componentDidMount() {
-    this.props.onInit();
+    this.props.onInit(this.props.token);
   }
   render() {
     let orders = <Spinner />;
@@ -28,10 +28,14 @@ class Orders extends Component {
   }
 }
 const mapStateToProps = state => {
-  return { orders: state.order.orders, loading: state.order.loading };
+  return {
+    orders: state.order.orders,
+    loading: state.order.loading,
+    token: state.auth.token
+  };
 };
 const mapDispatchToProps = dispatch => {
-  return { onInit: () => dispatch(initFetch()) };
+  return { onInit: token => dispatch(initFetch(token)) };
 };
 export default connect(
   mapStateToProps,

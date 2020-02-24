@@ -5,11 +5,10 @@ const navItems = props => {
   return (
     <ul className={styles.NavigationItems}>
       <NavigationItem link="/" exact>Burger Builder</NavigationItem>
-      <NavigationItem link="/orders" >Previous orders</NavigationItem>
-      <NavigationItem link="/account" >Account</NavigationItem>
-      <NavigationItem link="/auth" >Login</NavigationItem>
-
-      
+     
+      {props.auth ? ( <NavigationItem link="/orders" >Previous orders</NavigationItem>):null}
+      {props.auth ? ( <NavigationItem link="/account" >Account</NavigationItem>):null}
+      {props.auth ? <NavigationItem link="/logout" >Logout</NavigationItem>:<NavigationItem link="/auth" >Signup</NavigationItem>}
     </ul>
   );
 };
