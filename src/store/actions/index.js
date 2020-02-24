@@ -5,3 +5,4 @@ export {
   failIngredients
 } from "./burgerBuilder";
 export { purchaseStart, purchaseInit, initFetch} from "./order";
+export {auth} from './auth'
